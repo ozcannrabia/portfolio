@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-void: #030508;
+    --color-aurora-blue: #00d4ff;
+    --color-aurora-purple: #8c52ff;
+    --color-aurora-pink: #ff2d78;
+    --color-aurora-green: #00ff9f;
+    --glow-purple: 0 0 40px rgba(140, 82, 255, 0.4);
+    --glow-blue: 0 0 40px rgba(0, 212, 255, 0.4);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #8c52ff #030508;
+  }
+
+  html::-webkit-scrollbar {
+    width: 4px;
+  }
+  html::-webkit-scrollbar-track {
+    background: #030508;
+  }
+  html::-webkit-scrollbar-thumb {
+    background: #8c52ff;
+    border-radius: 4px;
+  }
+
+  body {
+    background-color: #030508;
+    color: #e8e0f0;
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  ::selection {
+    background: rgba(140, 82, 255, 0.3);
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-card {
+    background: rgba(140, 82, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(140, 82, 255, 0.15);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 30px rgba(140, 82, 255, 0.3), 0 0 60px rgba(140, 82, 255, 0.1);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.3), 0 0 60px rgba(0, 212, 255, 0.1);
+  }
+
+  .text-glow-purple {
+    text-shadow: 0 0 20px rgba(140, 82, 255, 0.8), 0 0 40px rgba(140, 82, 255, 0.4);
+  }
+
+  .text-glow-blue {
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 40px rgba(0, 212, 255, 0.4);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #00d4ff 0%, #8c52ff 50%, #ff2d78 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #00d4ff, #8c52ff, #ff2d78);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .noise-overlay::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  .section-padding {
+    @apply py-12 px-6 md:px-12 lg:px-24;
+  }
+}
+
+/* Custom cursor */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #8c52ff;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, background 0.2s ease;
+  mix-blend-mode: screen;
+}
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(140, 82, 255, 0.5);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+}
+
+.cursor-ring.hovering {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(0, 212, 255, 0.6);
+}
+
+/* Orbit animations */
+@keyframes orbit1 {
+  from { transform: rotate(0deg) translateX(130px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
+}
+@keyframes orbit2 {
+  from { transform: rotate(120deg) translateX(130px) rotate(-120deg); }
+  to   { transform: rotate(480deg) translateX(130px) rotate(-480deg); }
+}
+@keyframes orbit3 {
+  from { transform: rotate(240deg) translateX(130px) rotate(-240deg); }
+  to   { transform: rotate(600deg) translateX(130px) rotate(-600deg); }
+}
