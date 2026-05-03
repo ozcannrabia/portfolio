@@ -41,15 +41,24 @@ export default function ContactSection() {
 
   const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!form.name || !form.email || !form.message) return
-    setStatus('sending')
-    await new Promise(r => setTimeout(r, 1500))
+ const handleSubmit = async (e) => {
+  e.preventDefault()
+  if (!form.name || !form.email || !form.message) return
+  setStatus('sending')
+  const res = await fetch('https://formspree.io/f/xbdwdgnb', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: form.name, email: form.email, message: form.message }),
+  })
+  if (res.ok) {
     setStatus('success')
     setForm({ name: '', email: '', message: '' })
     setTimeout(() => setStatus('idle'), 4000)
+  } else {
+    setStatus('idle')
+    alert('Bir hata oluştu, tekrar dene.')
   }
+}
 
   const labels = lang === 'tr'
     ? { name: 'İSİM', email: 'E-POSTA', message: 'MESAJ', namePh: 'Adınız', msgPh: 'Ne düşünüyorsunuz?', sending: 'Gönderiliyor...', sent: '✓ Mesaj gönderildi!' }
